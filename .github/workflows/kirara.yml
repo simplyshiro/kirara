@@ -14,8 +14,8 @@ jobs:
       - run: pip install -r requirements.txt
       - env:
           COOKIES: ${{ secrets.COOKIES }}
-          GENSHIN_DAILY: ${{ vars.GENSHIN_DAILY }}
-          HONKAI_DAILY: ${{ vars.HONKAI_DAILY }}
-          STARRAIL_DAILY: ${{ vars.STARRAIL_DAILY }}
-          ZZZ_DAILY: ${{ vars.ZZZ_DAILY }}
+          GENSHIN: ${{ vars.GENSHIN }}
+          HONKAI: ${{ vars.HONKAI }}
+          STARRAIL: ${{ vars.STARRAIL }}
+          ZZZ: ${{ vars.ZZZ }}
         run: python kirara.py
