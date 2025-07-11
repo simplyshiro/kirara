@@ -3,27 +3,52 @@
 import asyncio
 import http.cookies
 import os
+import sys
 import genshin
 
 
 async def main():
-    cookies = http.cookies.SimpleCookie(os.getenv("COOKIES"))
+    env_cookies = os.getenv("COOKIES")
 
-    if (os.getenv("GENSHIN")):
-        await claim_daily_reward(game=genshin.Game.GENSHIN, cookies=cookies)
+    if not env_cookies:
+        print("Environment variable COOKIES is not set.")
+        sys.exit(1)
 
-    if (os.getenv("HONKAI")):
-        await claim_daily_reward(game=genshin.Game.HONKAI, cookies=cookies)
+    try:
+        cookies = http.cookies.SimpleCookie(env_cookies)
+    except http.cookies.CookieError:
+        print("Error parsing cookies.")
+        sys.exit(1)
 
-    if (os.getenv("STARRAIL")):
-        await claim_daily_reward(game=genshin.Game.STARRAIL, cookies=cookies)
+    required_cookies = ["account_id_v2", "cookie_token_v2"]
 
-    if (os.getenv("ZZZ")):
-        await claim_daily_reward(game=genshin.Game.ZZZ, cookies=cookies)
+    for cookie in required_cookies:
+        if cookie not in cookies:
+            print(f"Missing {cookie} in the COOKIES environment variable.")
+            sys.exit(1)
+
+    env_games = os.getenv("GAMES")
+    games_to_claim_daily_reward = []
+
+    if env_games:
+        games_to_claim_daily_reward = [
+            game.strip().upper() for game in env_games.split(",") if game.strip()
+        ]
+
+    if not games_to_claim_daily_reward:
+        print(
+            'No specified games to claim daily reward, set the GAMES environment variable (e.g., GAMES="GENSHIN,HONKAI,STARRAIL,ZZZ").'
+        )
+        sys.exit(0)
+
+    for game in games_to_claim_daily_reward:
+        try:
+            await claim_daily_reward(game=genshin.Game[game], cookies=cookies)
+        except KeyError:
+            print(f"{game} is not a valid game. Skipping.")
 
 
-async def claim_daily_reward(game: genshin.Game,
-                             cookies: http.cookies.SimpleCookie):
+async def claim_daily_reward(game: genshin.Game, cookies: http.cookies.SimpleCookie):
     client = genshin.Client(game=game)
 
     await set_cookies(client, cookies)
@@ -31,17 +56,18 @@ async def claim_daily_reward(game: genshin.Game,
     try:
         await client.claim_daily_reward(reward=False)
     except genshin.AlreadyClaimed:
-        print("Already claimed the daily reward today.")
+        print(f"Already claimed the daily reward for {game.name} today.")
+    except genshin.InvalidCookies:
+        print("Either account_id_v2 or cookie_token_v2 is invalid.")
+        sys.exit(1)
 
 
-async def set_cookies(client: genshin.Client,
-                      cookies: http.cookies.SimpleCookie):
+async def set_cookies(client: genshin.Client, cookies: http.cookies.SimpleCookie):
     account_id_v2 = cookies["account_id_v2"].value
     cookie_token_v2 = cookies["cookie_token_v2"].value
 
-    client.set_cookies(account_id_v2=account_id_v2,
-                       cookie_token_v2=cookie_token_v2)
+    client.set_cookies(account_id_v2=account_id_v2, cookie_token_v2=cookie_token_v2)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     asyncio.run(main())
