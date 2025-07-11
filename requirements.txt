@@ -1,1 +1,1 @@
-genshin @ git+https://github.com/thesadru/genshin.py.git
+genshin
