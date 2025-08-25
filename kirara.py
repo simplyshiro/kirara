@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 import asyncio
-import http.cookies
 import os
 import sys
 import genshin
