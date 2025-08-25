@@ -7,6 +7,18 @@ import sys
 import genshin
 
 
+async def claim_daily_reward(game: genshin.Game, cookies: str):
+    client = genshin.Client(game=game, cookies=cookies)
+
+    try:
+        await client.claim_daily_reward(reward=False)
+    except genshin.AlreadyClaimed:
+        print(f"Already claimed the daily reward for {game.name} today.")
+    except genshin.InvalidCookies:
+        print("Invalid cookies detected.")
+        sys.exit(1)
+
+
 async def main():
     cookies = os.getenv("COOKIES")
 
@@ -33,18 +45,6 @@ async def main():
             await claim_daily_reward(game=genshin.Game[game], cookies=cookies)
         except KeyError:
             print(f"{game} is not a valid game. Skipping.")
-
-
-async def claim_daily_reward(game: genshin.Game, cookies: str):
-    client = genshin.Client(game=game, cookies=cookies)
-
-    try:
-        await client.claim_daily_reward(reward=False)
-    except genshin.AlreadyClaimed:
-        print(f"Already claimed the daily reward for {game.name} today.")
-    except genshin.InvalidCookies:
-        print("Invalid cookies detected.")
-        sys.exit(1)
 
 
 if __name__ == "__main__":
