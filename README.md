@@ -10,7 +10,7 @@ Clone this repository and install the dependencies:
 ```sh
 git clone https://github.com/simplyshiro/kirara.git
 cd kirara
-python -m pip install -r requirements.txt
+uv sync
 ```
 
 Login to [HoYoLab](https://www.hoyolab.com/), open your browser's developer tools, go to the **Application** or **Storage** tab, go to the HoYoLab domain on the **Cookies** section, and copy the values of `account_id_v2` and `cookie_id_v2`.
@@ -32,7 +32,7 @@ Set the `GAMES` environment variable to a comma-separated list of the games you 
 
 Run the script:
 ```sh
-python kirara.py
+uv run kirara.py
 ```
 
 ## Disclaimer
