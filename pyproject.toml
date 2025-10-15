@@ -1,0 +1,9 @@
+[project]
+name = "kirara"
+version = "0.1.0"
+description = "Automatically claim daily rewards in HoYoLAB"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "genshin>=1.7",
+]
