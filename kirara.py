@@ -48,7 +48,7 @@ def get_configuration() -> tuple[str, list[genshin.Game], list[str]]:
     return cookies, valid_games, invalid_games
 
 
-async def claim_daily_reward_for_game(
+async def claim_daily_reward(
     client: genshin.Client, game: genshin.Game
 ) -> None:
     try:
@@ -70,7 +70,7 @@ async def main() -> None:
 
     client: genshin.Client = genshin.Client(cookies=cookies)
     coroutines: list[Coroutine[Any, Any, None]] = [
-        claim_daily_reward_for_game(client, game) for game in valid_games
+        claim_daily_reward(client, game) for game in valid_games
     ]
 
     try:
