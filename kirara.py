@@ -48,9 +48,7 @@ def get_configuration() -> tuple[str, list[genshin.Game], list[str]]:
     return cookies, valid_games, invalid_games
 
 
-async def claim_daily_reward(
-    client: genshin.Client, game: genshin.Game
-) -> None:
+async def claim_daily_reward(client: genshin.Client, game: genshin.Game) -> None:
     try:
         await client.claim_daily_reward(game=game, reward=False)
         logging.info(f"Successfully claimed the daily reward for `{game.name}`.")
