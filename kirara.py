@@ -18,12 +18,12 @@ logging.basicConfig(
 
 
 def get_configuration() -> tuple[str, list[genshin.Game], list[str]]:
-    cookies: str = os.getenv("COOKIES")
+    cookies: str | None = os.getenv("COOKIES")
 
     if not cookies:
         raise ValueError("Environment variable `COOKIES` is not set.")
 
-    env_games: str = os.getenv("GAMES")
+    env_games: str | None = os.getenv("GAMES")
 
     if not env_games:
         raise ValueError(
