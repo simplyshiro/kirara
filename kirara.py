@@ -4,7 +4,7 @@ import asyncio
 import logging
 import os
 import sys
-from collections.abc import Coroutine
+from types import CoroutineType
 from typing import Any
 
 import genshin
@@ -67,7 +67,7 @@ async def main() -> None:
         sys.exit(1)
 
     client: genshin.Client = genshin.Client(cookies=cookies)
-    coroutines: list[Coroutine[Any, Any, None]] = [
+    coroutines: list[CoroutineType[Any, Any, None]] = [
         claim_daily_reward(client, game) for game in valid_games
     ]
 
