@@ -1,7 +1,7 @@
-name: "Claim daily reward"
+name: Claim Daily Rewards
 on:
   schedule:
-    - cron: "0 16 * * *"
+    - cron: '0 16 * * *'
   workflow_dispatch:
 jobs:
   claim_daily_reward:
