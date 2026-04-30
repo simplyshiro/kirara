@@ -1,0 +1,22 @@
+name: Claim Daily Rewards
+on:
+  schedule:
+    - cron: '0 16 * * *'
+  workflow_dispatch:
+env:
+  CARGO_TERM_COLOR: always
+jobs:
+  run-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/cache@v5
+        with:
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          path: |
+            ~/.cargo/registry
+            target
+      - env:
+          KIRARA_COOKIES: ${{ secrets.KIRARA_COOKIES }}
+          KIRARA_GAMES: ${{ vars.KIRARA_GAMES }}
+        run: cargo run --release
