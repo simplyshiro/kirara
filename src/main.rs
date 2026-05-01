@@ -5,9 +5,13 @@ use crate::api::Client;
 use crate::routes::Game;
 
 use std::env;
+use std::error::Error;
 use std::str::FromStr;
 use tokio::task::JoinSet;
-use tracing::{Level, error, info, subscriber::SetGlobalDefaultError};
+use tracing::Level;
+use tracing::subscriber::SetGlobalDefaultError;
+use tracing::subscriber::set_global_default;
+use tracing::{error, info};
 use tracing_subscriber::FmtSubscriber;
 
 fn setup_logging() -> Result<(), SetGlobalDefaultError> {
@@ -15,12 +19,12 @@ fn setup_logging() -> Result<(), SetGlobalDefaultError> {
         .with_max_level(Level::INFO)
         .finish();
 
-    tracing::subscriber::set_global_default(subscriber)?;
+    set_global_default(subscriber)?;
     Ok(())
 }
 
 #[tokio::main]
-async fn main() -> Result<(), Box<dyn std::error::Error>> {
+async fn main() -> Result<(), Box<dyn Error>> {
     setup_logging()?;
 
     let cookies = env::var("KIRARA_COOKIES")?;

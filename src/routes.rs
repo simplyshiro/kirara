@@ -1,4 +1,5 @@
-use std::fmt::{self, Display};
+use std::fmt;
+use std::fmt::{Display, Formatter};
 use std::result;
 use std::str::FromStr;
 
@@ -51,7 +52,7 @@ impl Game {
 pub struct ParseGameError(String);
 
 impl Display for ParseGameError {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> fmt::Result {
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
         write!(f, "`{}` is not a valid game", self.0)
     }
 }
