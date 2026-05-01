@@ -1,3 +1,6 @@
+mod api;
+mod routes;
+
 use crate::api::Client;
 use crate::routes::Game;
 
@@ -6,9 +9,6 @@ use std::str::FromStr;
 use tokio::task::JoinSet;
 use tracing::{Level, error, info, subscriber::SetGlobalDefaultError};
 use tracing_subscriber::FmtSubscriber;
-
-mod api;
-mod routes;
 
 fn setup_logging() -> Result<(), SetGlobalDefaultError> {
     let subscriber = FmtSubscriber::builder()
