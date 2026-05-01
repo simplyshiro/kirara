@@ -1,4 +1,5 @@
-use reqwest::header::{self, COOKIE, HeaderMap, HeaderValue};
+use reqwest::header;
+use reqwest::header::{COOKIE, HeaderMap, HeaderValue};
 use serde::Deserialize;
 use std::error::Error;
 
