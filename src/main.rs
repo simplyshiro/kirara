@@ -1,9 +1,6 @@
 mod api;
 mod routes;
 
-use crate::api::Client;
-use crate::routes::Game;
-
 use std::env;
 use std::error::Error;
 use std::str::FromStr;
@@ -13,6 +10,9 @@ use tracing::subscriber::SetGlobalDefaultError;
 use tracing::subscriber::set_global_default;
 use tracing::{error, info};
 use tracing_subscriber::FmtSubscriber;
+
+use crate::api::Client;
+use crate::routes::Game;
 
 fn setup_logging() -> Result<(), SetGlobalDefaultError> {
     let subscriber = FmtSubscriber::builder()
