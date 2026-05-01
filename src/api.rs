@@ -27,10 +27,10 @@ impl Client {
             .await
     }
 
-    pub fn new(cookies: String) -> Result<Self, Box<dyn std::error::Error>> {
+    pub fn new(cookies: &str) -> Result<Self, Box<dyn std::error::Error>> {
         let mut headers = HeaderMap::new();
 
-        headers.insert(COOKIE, HeaderValue::from_str(&cookies)?);
+        headers.insert(COOKIE, HeaderValue::from_str(cookies)?);
 
         headers.insert(
             header::USER_AGENT,

@@ -12,7 +12,7 @@ pub enum Game {
 }
 
 impl Game {
-    pub fn id(&self) -> &'static str {
+    pub fn id(self) -> &'static str {
         match self {
             Game::HonkaiImpact3rd => "bh3",
             Game::TearsOfThemis => "nxx",
@@ -22,7 +22,7 @@ impl Game {
         }
     }
 
-    pub fn reward_url(&self) -> &'static str {
+    pub fn reward_url(self) -> &'static str {
         match self {
             Game::HonkaiImpact3rd => {
                 "https://sg-public-api.hoyolab.com/event/mani/sign?act_id=e202110291205111"

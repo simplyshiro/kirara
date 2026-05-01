@@ -24,11 +24,11 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     setup_logging()?;
 
     let cookies = env::var("KIRARA_COOKIES")?;
-    let client = Client::new(cookies)?;
+    let client = Client::new(&cookies)?;
 
     let mut games = Vec::new();
 
-    for s in env::var("KIRARA_GAMES")?.split(",") {
+    for s in env::var("KIRARA_GAMES")?.split(',') {
         match Game::from_str(s) {
             Ok(game) => games.push(game),
             Err(error) => error!("{}", error),
