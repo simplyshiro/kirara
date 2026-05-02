@@ -7,6 +7,7 @@ env:
   CARGO_TERM_COLOR: always
 jobs:
   run-release:
+    name: Run release profile
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
