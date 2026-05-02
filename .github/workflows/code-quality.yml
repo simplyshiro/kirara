@@ -12,14 +12,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - run: rustup component add rustfmt
       - run: cargo fmt -- --check
   clippy:
     name: Clippy
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - run: rustup component add clippy
       - run: cargo clippy -- --deny clippy::pedantic
   test-release:
     name: Test release profile
