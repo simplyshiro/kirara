@@ -15,33 +15,33 @@ pub enum Game {
 impl Game {
     pub fn id(self) -> &'static str {
         match self {
-            Game::GenshinImpact => "hk4e",
-            Game::HonkaiImpact3rd => "bh3",
-            Game::HonkaiStarRail => "hkrpg",
-            Game::TearsOfThemis => "nxx",
-            Game::ZenlessZoneZero => "zzz",
+            Self::GenshinImpact => "hk4e",
+            Self::HonkaiImpact3rd => "bh3",
+            Self::HonkaiStarRail => "hkrpg",
+            Self::TearsOfThemis => "nxx",
+            Self::ZenlessZoneZero => "zzz",
         }
     }
 
     pub fn reward_url(self) -> &'static str {
         match self {
-            Game::GenshinImpact => {
+            Self::GenshinImpact => {
                 "https://sg-hk4e-api.hoyolab.com/event/sol/sign?act_id=e202102251931481"
             }
 
-            Game::HonkaiImpact3rd => {
+            Self::HonkaiImpact3rd => {
                 "https://sg-public-api.hoyolab.com/event/mani/sign?act_id=e202110291205111"
             }
 
-            Game::HonkaiStarRail => {
+            Self::HonkaiStarRail => {
                 "https://sg-public-api.hoyolab.com/event/luna/hkrpg/os/sign?act_id=e202303301540311"
             }
 
-            Game::TearsOfThemis => {
+            Self::TearsOfThemis => {
                 "https://sg-public-api.hoyolab.com/event/luna/nxx/os/sign?act_id=e202202281857121"
             }
 
-            Game::ZenlessZoneZero => {
+            Self::ZenlessZoneZero => {
                 "https://sg-public-api.hoyolab.com/event/luna/zzz/os/sign?act_id=e202406031448091"
             }
         }
@@ -62,9 +62,9 @@ impl FromStr for Game {
 
     fn from_str(s: &str) -> result::Result<Self, Self::Err> {
         match s.trim().to_uppercase().as_str() {
-            "GI" => Ok(Game::GenshinImpact),
+            "GI" => Ok(Self::GenshinImpact),
             "HI3" => Ok(Self::HonkaiImpact3rd),
-            "HSR" => Ok(Game::HonkaiStarRail),
+            "HSR" => Ok(Self::HonkaiStarRail),
             "TOT" => Ok(Self::TearsOfThemis),
             "ZZZ" => Ok(Self::ZenlessZoneZero),
             _ => Err(ParseGameError(s.to_string())),
