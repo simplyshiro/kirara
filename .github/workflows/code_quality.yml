@@ -7,8 +7,22 @@ on:
 env:
   CARGO_TERM_COLOR: always
 jobs:
-  code-quality:
-    name: Code Quality
+  format:
+    name: rustfmt
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - run: rustup component add rustfmt
+      - run: cargo fmt -- --check
+  clippy:
+    name: Clippy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - run: rustup component add clippy
+      - run: cargo clippy -- --deny clippy::pedantic
+  test-release:
+    name: Test release profile
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -18,7 +32,4 @@ jobs:
           path: |
             ~/.cargo/registry
             target
-      - run: rustup component add clippy rustfmt
-      - run: cargo fmt -- --check
-      - run: cargo clippy -- --deny clippy::pedantic
-      - run: cargo test --verbose
+      - run: cargo test --release
