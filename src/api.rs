@@ -19,13 +19,13 @@ pub struct Response {
 }
 
 impl Client {
-    pub async fn claim_daily_reward(&self, game: Game) -> Result<self::Response, reqwest::Error> {
+    pub async fn claim_daily_reward(&self, game: Game) -> Result<Response, reqwest::Error> {
         self.client
             .post(game.reward_url())
             .header("x-rpc-signgame", game.id())
             .send()
             .await?
-            .json::<self::Response>()
+            .json::<Response>()
             .await
     }
 
@@ -33,12 +33,7 @@ impl Client {
         let mut headers = HeaderMap::new();
 
         headers.insert(COOKIE, HeaderValue::from_str(cookies)?);
-
-        headers.insert(
-            header::USER_AGENT,
-            HeaderValue::from_static(self::USER_AGENT),
-        );
-
+        headers.insert(header::USER_AGENT, HeaderValue::from_static(USER_AGENT));
         headers.insert(
             "referer",
             HeaderValue::from_static("https://act.hoyolab.com/"),
