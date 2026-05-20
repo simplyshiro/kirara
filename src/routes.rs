@@ -1,3 +1,4 @@
+use std::error::Error;
 use std::fmt;
 use std::fmt::{Display, Formatter};
 use std::result;
@@ -56,6 +57,8 @@ impl Display for ParseGameError {
         write!(f, "`{}` is not a valid game", self.0)
     }
 }
+
+impl Error for ParseGameError {}
 
 impl FromStr for Game {
     type Err = ParseGameError;
