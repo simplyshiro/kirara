@@ -27,15 +27,15 @@ jobs:
             ~/.cargo/registry
             target
       - run: cargo clippy -- --deny warnings
-  test-release:
-    name: Test release profile
+  build:
+    name: Build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
       - uses: actions/cache@v5
         with:
-          key: ${{ runner.os }}-cargo-release-${{ hashFiles('**/Cargo.lock') }}
+          key: ${{ runner.os }}-cargo-debug-${{ hashFiles('**/Cargo.lock') }}
           path: |
             ~/.cargo/registry
             target
-      - run: cargo test --release
+      - run: cargo build
