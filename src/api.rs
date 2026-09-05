@@ -1,11 +1,11 @@
-use reqwest::header;
-use reqwest::header::{COOKIE, HeaderMap, HeaderValue};
+use reqwest::header::{COOKIE, HeaderMap, HeaderValue, USER_AGENT};
 use serde::Deserialize;
 use std::error::Error;
 
 use crate::game::Game;
 
-const USER_AGENT: &str = "Mozilla/5.0 (X11; Linux x86_64; rv:140.0) Gecko/20100101 Firefox/140.0";
+const FIREFOX_USER_AGENT: &str =
+    "Mozilla/5.0 (X11; Linux x86_64; rv:140.0) Gecko/20100101 Firefox/140.0";
 
 #[derive(Clone)]
 pub struct Client {
@@ -33,7 +33,7 @@ impl Client {
         let mut headers = HeaderMap::new();
 
         headers.insert(COOKIE, HeaderValue::from_str(cookies)?);
-        headers.insert(header::USER_AGENT, HeaderValue::from_static(USER_AGENT));
+        headers.insert(USER_AGENT, HeaderValue::from_static(FIREFOX_USER_AGENT));
         headers.insert(
             "referer",
             HeaderValue::from_static("https://act.hoyolab.com/"),
