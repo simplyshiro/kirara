@@ -1,6 +1,7 @@
 mod api;
 mod game;
 
+use std::collections::HashSet;
 use std::env;
 use std::error::Error;
 use std::str::FromStr;
@@ -15,21 +16,26 @@ fn setup_logging() {
     tracing_subscriber::fmt().with_max_level(Level::INFO).init();
 }
 
+fn parse_games(input: &str) -> HashSet<Game> {
+    input
+        .split(',')
+        .filter_map(|s| match Game::from_str(s) {
+            Ok(game) => Some(game),
+            Err(error) => {
+                error!("{}", error);
+                None
+            }
+        })
+        .collect()
+}
+
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
     setup_logging();
 
     let cookies = env::var("KIRARA_COOKIES")?;
     let client = Client::new(&cookies)?;
-
-    let mut games = Vec::new();
-
-    for s in env::var("KIRARA_GAMES")?.split(',') {
-        match Game::from_str(s) {
-            Ok(game) => games.push(game),
-            Err(error) => error!("{}", error),
-        }
-    }
+    let games = parse_games(&env::var("KIRARA_GAMES")?);
 
     if games.is_empty() {
         error!("no valid games found");

@@ -4,7 +4,7 @@ use std::fmt::{Display, Formatter};
 use std::result;
 use std::str::FromStr;
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
 pub enum Game {
     GenshinImpact,
     HonkaiImpact3rd,
