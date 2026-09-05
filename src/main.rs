@@ -6,26 +6,18 @@ use std::error::Error;
 use std::str::FromStr;
 use tokio::task::JoinSet;
 use tracing::Level;
-use tracing::subscriber::SetGlobalDefaultError;
-use tracing::subscriber::set_global_default;
 use tracing::{error, info};
-use tracing_subscriber::FmtSubscriber;
 
 use crate::api::Client;
 use crate::game::Game;
 
-fn setup_logging() -> Result<(), SetGlobalDefaultError> {
-    let subscriber = FmtSubscriber::builder()
-        .with_max_level(Level::INFO)
-        .finish();
-
-    set_global_default(subscriber)?;
-    Ok(())
+fn setup_logging() {
+    tracing_subscriber::fmt().with_max_level(Level::INFO).init();
 }
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
-    setup_logging()?;
+    setup_logging();
 
     let cookies = env::var("KIRARA_COOKIES")?;
     let client = Client::new(&cookies)?;
