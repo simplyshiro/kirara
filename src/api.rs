@@ -1,4 +1,4 @@
-use reqwest::header::{COOKIE, HeaderMap, HeaderValue, USER_AGENT};
+use reqwest::header::{COOKIE, HeaderMap, HeaderValue, REFERER, USER_AGENT};
 use serde::Deserialize;
 use std::error::Error;
 
@@ -6,6 +6,7 @@ use crate::game::Game;
 
 const FIREFOX_USER_AGENT: &str =
     "Mozilla/5.0 (X11; Linux x86_64; rv:140.0) Gecko/20100101 Firefox/140.0";
+const HOYOLAB_REFERER: &str = "https://act.hoyolab.com/";
 
 #[derive(Clone)]
 pub struct Client {
@@ -34,10 +35,7 @@ impl Client {
 
         headers.insert(COOKIE, HeaderValue::from_str(cookies)?);
         headers.insert(USER_AGENT, HeaderValue::from_static(FIREFOX_USER_AGENT));
-        headers.insert(
-            "referer",
-            HeaderValue::from_static("https://act.hoyolab.com/"),
-        );
+        headers.insert(REFERER, HeaderValue::from_static(HOYOLAB_REFERER));
 
         let client = reqwest::Client::builder()
             .default_headers(headers)
