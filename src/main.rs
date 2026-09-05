@@ -1,5 +1,5 @@
 mod api;
-mod routes;
+mod game;
 
 use std::env;
 use std::error::Error;
@@ -12,7 +12,7 @@ use tracing::{error, info};
 use tracing_subscriber::FmtSubscriber;
 
 use crate::api::Client;
-use crate::routes::Game;
+use crate::game::Game;
 
 fn setup_logging() -> Result<(), SetGlobalDefaultError> {
     let subscriber = FmtSubscriber::builder()
